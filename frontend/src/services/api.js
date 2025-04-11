@@ -1,8 +1,11 @@
 import axios from 'axios';
 
+// Get the API URL from environment or use default
+const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+
 // Create a configured axios instance with base URL and default settings
 const api = axios.create({
-  baseURL: 'http://localhost:5000/api',
+  baseURL: `${apiUrl}/api`,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
@@ -93,7 +96,7 @@ export const authService = {
         // If network error, try direct URL as fallback
         console.log('Network error detected, trying direct URL fallback');
         try {
-          const fallbackResponse = await axios.post('http://localhost:5000/api/auth/login', credentials, {
+          const fallbackResponse = await axios.post(`${apiUrl}/api/auth/login`, credentials, {
             headers: {
               'Content-Type': 'application/json',
               'Accept': 'application/json'
@@ -131,7 +134,36 @@ export const authService = {
 // Report service functions
 export const reportService = {
   getAll: async () => {
-    return api.get('/reports');
+    try {
+      console.log('Attempting to fetch reports with API instance');
+      return await api.get('/reports');
+    } catch (err) {
+      console.error('Error fetching reports with API instance:', err);
+      
+      if (!err.response) {
+        // If network error, try direct URL as fallback
+        console.log('Network error detected, trying direct URL fallback for reports');
+        try {
+          const fallbackResponse = await axios.get(`${apiUrl}/api/reports`, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'x-auth-token': localStorage.getItem('token')
+            },
+            timeout: 20000 // Increase timeout for fallback
+          });
+          
+          console.log('Reports fetched successfully via direct URL:', fallbackResponse.data);
+          return fallbackResponse;
+        } catch (fallbackErr) {
+          console.error('Failed to fetch reports with fallback approach:', fallbackErr);
+          throw fallbackErr;
+        }
+      }
+      
+      // For other types of errors, just propagate
+      throw err;
+    }
   },
   getUserReports: async () => {
     return api.get('/reports/user/my-reports');

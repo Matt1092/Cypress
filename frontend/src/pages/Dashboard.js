@@ -282,11 +282,20 @@ function Dashboard() {
       if (err.response) {
         console.error('Error status:', err.response.status);
         console.error('Error data:', err.response.data);
-        console.error('Error headers:', err.response.headers);
         
-        // Display the exact error message from the server for duplicate reports
-        if (err.response.status === 400 && err.response.data && err.response.data.message) {
-          setFormError(err.response.data.message);
+        // Display the error message from the server in a user-friendly way
+        if (err.response.status === 400 && 
+            err.response.data && 
+            err.response.data.message && 
+            err.response.data.message.includes('already been reported')) {
+          // This is a duplicate report error
+          setFormError(
+            <div className="duplicate-report-error">
+              <p><strong>Duplicate Report Detected</strong></p>
+              <p>{err.response.data.message}</p>
+              <p>Please check the map to see the existing report.</p>
+            </div>
+          );
         } else {
           setFormError(err.response.data?.message || `Server error: ${err.response.status}`);
         }

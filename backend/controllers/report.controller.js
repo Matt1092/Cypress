@@ -89,8 +89,8 @@ export const createReport = async (req, res) => {
 
         // Check for duplicate reports within 5 meters
         try {
-            const duplicateReport = await Report.findOne({
-                type,
+            // Find any existing reports (both active and resolved) at this location
+            const existingReports = await Report.find({
                 location: {
                     $near: {
                         $geometry: {
@@ -100,18 +100,35 @@ export const createReport = async (req, res) => {
                         $maxDistance: 5 // 5 meters
                     }
                 }
-            });
+            }).sort({ createdAt: -1 }); // Get most recent first
 
-            if (duplicateReport) {
-                return res.status(400).json({ 
-                    success: false, 
-                    message: "A similar problem has already been reported nearby. Please check existing reports." 
-                });
+            if (existingReports.length > 0) {
+                // Check if there are any active (non-solved) reports
+                const activeReports = existingReports.filter(report => 
+                    report.status !== 'Solved' && 
+                    report.type === type
+                );
+
+                if (activeReports.length > 0) {
+                    // There are active reports at this location with the same type
+                    return res.status(400).json({ 
+                        success: false, 
+                        message: "A similar problem has already been reported nearby and is still being addressed. Please check existing reports." 
+                    });
+                }
+
+                // If we get here, all reports at this location are solved
+                console.log('All existing reports at this location are solved. Allowing new report.');
             }
         } catch (geoQueryError) {
             console.error('Error in duplicate report geo query:', geoQueryError.message);
             // Continue with report creation even if geo query fails
         }
+
+        // If we get here, either:
+        // 1. There are no reports at this location
+        // 2. All reports at this location are solved
+        // 3. The existing reports are of a different type
 
         // Skip Google Maps API call temporarily to avoid potential errors
         let address = 'Address pending';

@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { authService } from '../services/api';
 import axios from 'axios';
 
-function Login({ setIsLoggedIn }) {
+function Login({ onLogin }) {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -107,9 +107,8 @@ function Login({ setIsLoggedIn }) {
           // Continue anyway since we have the token
         }
         
-        // Update login state in the app
-        console.log('Setting isLoggedIn to true');
-        setIsLoggedIn(true);
+        // Call onLogin with user data
+        onLogin(userData);
         
         // Redirect with slight delay to ensure state updates
         setTimeout(() => {

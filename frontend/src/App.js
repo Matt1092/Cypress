@@ -9,6 +9,10 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Map from './pages/Map';
+import Reports from './pages/Reports';
+import NewReport from './pages/NewReport';
+import ReportDetails from './pages/ReportDetails';
+import Profile from './pages/Profile';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -57,6 +61,18 @@ function App() {
     window.location.href = '/';
   };
 
+  const handleLogin = (userData) => {
+    // TODO: Implement actual login logic with backend
+    console.log('Logging in user:', userData);
+    setIsLoggedIn(true);
+  };
+
+  const handleRegister = (userData) => {
+    // TODO: Implement actual registration logic with backend
+    console.log('Registering user:', userData);
+    setIsLoggedIn(true);
+  };
+
   // Show loading state until auth check completes
   if (!authChecked) {
     return (
@@ -76,7 +92,7 @@ function App() {
       <div className="app">
         <nav className="navbar">
           <div className="logo">
-            <Link to="/">Cypress2</Link>
+            <Link to="/">Cypress</Link>
           </div>
           <div className="nav-links">
             <Link to="/">Home</Link>
@@ -97,16 +113,20 @@ function App() {
 
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login setIsLoggedIn={setIsLoggedIn} />} />
-            <Route path="/register" element={<Register />} />
+            <Route path="/" element={<Home isLoggedIn={isLoggedIn} />} />
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+            <Route path="/register" element={<Register onRegister={handleRegister} />} />
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/map" element={<Map />} />
+            <Route path="/reports" element={<Reports />} />
+            <Route path="/reports/new" element={<NewReport />} />
+            <Route path="/reports/:id" element={<ReportDetails />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </main>
 
         <footer className="footer">
-          <p>&copy; 2023 Cypress2 - Report city problems</p>
+          <p>&copy; 2025 Cypress - Report city problems</p>
         </footer>
       </div>
     </Router>
