@@ -14,9 +14,7 @@ Cypress is a comprehensive city problem reporting platform that empowers citizen
 - **Interactive Map Interface**: View all reported issues on a city map with status indicators
 - **Issue Reporting System**: Submit detailed reports with precise location selection
 - **Progress Tracking**: Monitor the status and resolution actions for submitted issues
-- **Notification System**: Opt-in for updates on your submitted reports
 - **Duplicate Detection**: Intelligent system flags similar reports in the same area
-- **Verification Process**: Systems in place to ensure report authenticity
 
 ## Contributors
 
@@ -42,7 +40,7 @@ Cypress is a comprehensive city problem reporting platform that empowers citizen
 1. Clone the repository
    ```bash
    git clone https://github.com/Matt1092/Cypress.git
-   cd cypress
+   cd Cypress
    ```
 
 2. Install dependencies
@@ -51,30 +49,27 @@ Cypress is a comprehensive city problem reporting platform that empowers citizen
    npm install
    
    # Install frontend dependencies
-   cd client
+   cd frontend
    npm install
    cd ..
    ```
 
 3. Run the development server
    ```bash
-   npm run dev
+   npm run dev:both
    ```
 
    Note: All necessary API keys and environment variables are already configured in the code.
 
-Access the application:
-- Frontend: [http://localhost:3000](http://localhost:3000)
-- Backend API: [http://localhost:5000](http://localhost:5000)
-and als
+
 ## Application Features
 
 | **User Features**                                   | **Admin Features**                            |
 |-----------------------------------------------------|------------------------------------------------|
 | Register and login securely                         | Manage and update report statuses              |
-| Submit detailed reports with location selection     | Verify report authenticity                     |
-| Track status of submitted reports                   | Export data for analysis                       |
-| View all reports on an interactive map              | Detect and manage duplicate reports            |
+| Submit detailed reports with location selection     | Detect and manage duplicate reports            |
+| Track status of submitted reports                   |                                                |
+| View all reports on an interactive map              |                                                |
 | Receive notifications on report updates             |                                                |
 
 
@@ -85,7 +80,7 @@ and als
 ```
 backend/
 ├── config/
-│   └── db.js – Sets up and connects to the PostgreSQL database via Sequelize.
+│   └── db.js – Sets up and connects to the MongoDB database via Mongoose.
 ├── controllers/
 │   ├── auth.controller.js – Auth logic (login, signup, JWT).
 │   ├── maps.controller.js – Handles map-related data queries.
@@ -107,7 +102,7 @@ backend/
   - User authentication (register, login, profile)
   - Report management (create, read, update, delete)
   - Maps integration for location-based features
-  - 
+
 ### Frontend (/frontend)
 
 ```
@@ -146,7 +141,6 @@ frontend/
 ### Authentication
 - `POST /api/auth/register` - Register a new user
 - `POST /api/auth/login` - Login user
-- `GET /api/auth/verify-email/:token` - Verify email
 - `POST /api/auth/forgot-password` - Request password reset
 - `POST /api/auth/reset-password/:token` - Reset password
 - `PUT /api/auth/profile` - Update user profile
