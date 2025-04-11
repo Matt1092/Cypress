@@ -24,7 +24,7 @@ Cypress is a comprehensive city problem reporting platform that empowers citizen
 | Matthew Moga | 501253529 |
 | Adan Khalid | 501246496 |
 | Timur Rakhimov | 501235815 |
-| Ahmad Yehya | 5011224095 |
+| Ahmad Yehya | 501124095 |
 | Mohammed Ahmed | 501265966 |
 
 ## Getting Started
