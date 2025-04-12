@@ -9,6 +9,10 @@
 
 Cypress is a comprehensive city problem reporting platform that empowers citizens to report and track issues they observe around the city. From infrastructure problems like sinkholes and missing signs to safety concerns, Cypress provides a streamlined way for residents to notify authorities and monitor resolution progress.
 
+## Project Showcase
+
+https://www.youtube.com/watch?v=678GdPBHltM
+
 ## Key Features
 
 - **Interactive Map Interface**: View all reported issues on a city map with status indicators
