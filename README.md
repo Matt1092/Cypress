@@ -11,6 +11,7 @@ Cypress is a comprehensive city problem reporting platform that empowers citizen
 
 ## Project Showcase
 
+This video demonstrates the practical application of the project and how it can be utilized
 https://www.youtube.com/watch?v=678GdPBHltM
 
 ## Key Features
