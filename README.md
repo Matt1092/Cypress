@@ -163,4 +163,4 @@ frontend/
 ### Maps
 - `GET /api/maps/geocode` - Get address from coordinates
 - `GET /api/maps/reverse-geocode` - Get coordinates from address
-- `GET /api/maps/check-boundaries` - Check if location is within boundaries
+- `GET /api/maps/check-boundaries` - Check if location is within boundaries 
